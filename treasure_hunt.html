@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meaningful Union Square Park Treasure Hunt</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+        }
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        .score {
+            font-size: 24px;
+            color: #4CAF50;
+        }
+        .hints {
+            font-size: 16px;
+            color: #555;
+        }
+        .navigation {
+            margin-top: 20px;
+        }
+        .navigation a {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 0 5px; /* Add margin between links */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Meaningful Union Square Park Treasure Hunt</h1>
+    </header>
+    <main>
+        <h2>Click on Areas to Discover Treasures!</h2>
+        <div id="mapContainer"></div>
+        <div class="message" id="message"></div>
+        <div class="score" id="score">Score: 0</div>
+        <div class="hints" id="hints">Hint: Click around the park to discover treasures!</div>
+;
+        <div class="navigation">
+            <a href="data.html">Back to Data Visualization</a>
+            <a href="final_observation.html">History and Events</a>
+        
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Union Square Park Project</p>
+    </footer>
+
+    <script>
+        let treasures = [
+            { position: { x: 150, y: 100 }, found: false, points: 10, fact: "Did you know? Union Square Park has been a public gathering place since 1839." },
+            { position: { x: 400, y: 100 }, found: false, points: 20, fact: "Yoga sessions are held here regularly, promoting wellness and community." },
+            { position: { x: 150, y: 250 }, found: false, points: 15, fact: "The playground is a hub for families, filled with laughter and activity." },
+            { position: { x: 400, y: 250 }, found: false, points: 25, fact: "The park hosts various art exhibits that celebrate local artists." },
+            { position: { x: 650, y: 100 }, found: false, points: 30, fact: "Relaxation areas encourage visitors to unwind and connect with nature." },
+            { position: { x: 650, y: 250 }, found: false, points: 5, fact: "Community gatherings foster local engagement and collaboration." }
+        ];
+
+        let score = 0;
+
+        function setup() {
+            const canvas = createCanvas(800, 500);
+            canvas.parent('mapContainer');
+            drawMap();
+        }
+
+        function drawMap() {
+            background(224); // Light gray background
+
+            // Draw park rectangle
+            fill(100, 255, 100); // Green for park
+            rect(100, 50, 600, 400); // Park area
+
+            // Draw treasures
+            for (let treasure of treasures) {
+                if (!treasure.found) {
+                    fill(255, 215, 0); // Gold color for treasure
+                    ellipse(treasure.position.x, treasure.position.y, 30, 30); // Treasure location
+                }
+            }
+        }
+
+        function mousePressed() {
+            for (let treasure of treasures) {
+                let d = dist(mouseX, mouseY, treasure.position.x, treasure.position.y);
+                if (d < 15 && !treasure.found) { // Check if clicked treasure
+                    treasure.found = true;
+                    score += treasure.points;
+                    document.getElementById('score').innerText = `Score: ${score}`;
+                    document.getElementById('message').innerText = treasure.fact; // Show educational fact
+                    break; // Exit loop after finding a treasure
+                }
+            }
+        }
+
+        function draw() {
+            drawMap(); // Continuously draw the map
+        }
+    </script>
+</body>
+</html>
