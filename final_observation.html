@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive History of Union Square</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://i.imgur.com/rQoClFq.jpg'); /* Union Square Park background */
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .nav {
+            width: 100%;
+            background-color: rgba(34, 139, 34, 0.85); /* Semi-transparent green */
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        .nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .book-container {
+            width: 80%;
+            height: 80%;
+            background: rgba(255, 255, 255, 0.9); /* Light background for contrast */
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+        .story-container {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            margin: 20px;
+            max-width: 600px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .events {
+            display: none;
+            margin-top: 20px;
+            color: #333;
+        }
+        .event {
+            margin: 10px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-left: 5px solid #8B4513; /* Saddle brown */
+            border-radius: 5px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #6B8E23; /* Olive green */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #556B2F; /* Dark olive green */
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 20px;
+            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<div class="nav">
+    <a href="treasure_hunt.html">Back to Game!</a>
+    <a href="end.html">End</a>
+</div>
+
+<div class="book-container">
+    <h1>Explore the History of Union Square</h1>
+    <div class="story-container" id="storyContainer">
+        <p class="story-text" id="storyText"></p>
+        <button class="button" id="nextButton">Next</button>
+    </div>
+    <div class="events" id="eventsSection">
+        <h2>Upcoming Events and Activities</h2>
+        <div id="eventList"></div>
+    </div>
+</div>
+
+<script>
+    const storyParts = [
+        "Originally a public park created in 1839, it was designed to provide green space for the growing population of Manhattan.",
+        "Throughout the years, Union Square has served as a gathering place for various social movements and events, reflecting the city's vibrant culture and history.",
+        "From the abolitionist rallies of the 19th century to the anti-war protests of the 1960s, it has been a site of significant historical moments.",
+        "In the late 19th century, the square became known for its farmers' markets and various public events, further cementing its role as a community hub.",
+        "Over the decades, it has undergone several renovations, enhancing its landscape with beautiful gardens and public art installations.",
+        "Today, Union Square is a bustling area filled with street performers, food vendors, and locals enjoying the park.",
+        "It hosts a vibrant greenmarket that operates year-round, showcasing local produce and artisanal products."
+    ];
+
+    let currentPart = 0;
+
+    const storyText = document.getElementById('storyText');
+    const nextButton = document.getElementById('nextButton');
+    const storyContainer = document.getElementById('storyContainer');
+    const eventsSection = document.getElementById('eventsSection');
+
+    function showNextPart() {
+        if (currentPart < storyParts.length) {
+            // Display each story part with a fade-in effect
+            storyText.innerHTML += `<br>${storyParts[currentPart]}`;
+            storyContainer.style.opacity = 1;
+            storyContainer.style.animation = "fadeIn 0.5s forwards";
+            currentPart++;
+        }
+        if (currentPart === storyParts.length) {
+            nextButton.style.display = 'none';
+            setTimeout(() => {
+                storyContainer.style.opacity = 0;
+                setTimeout(() => {
+                    storyContainer.style.display = 'none';
+                    eventsSection.style.display = 'block';
+                    populateEvents();
+                }, 500);
+            }, 1000);
+        }
+    }
+
+    const events = [
+        {
+            name: "Union Square Greenmarket",
+            date: "Every Wednesday and Saturday",
+            description: "A vibrant farmers' market featuring local produce, artisanal goods, and seasonal products."
+        },
+        {
+            name: "Outdoor Yoga in the Park",
+            date: "Sundays at 10 AM",
+            description: "Join a community yoga class suitable for all levels, set against the backdrop of Union Square."
+        },
+        {
+            name: "Union Square Holiday Market",
+            date: "November 15 - December 24",
+            description: "A festive market featuring local artisans, food vendors, and unique gifts."
+        },
+        {
+            name: "Live Music Performances",
+            date: "Fridays from 5 PM",
+            description: "Enjoy live music from local artists and bands in the heart of Union Square."
+        }
+    ];
+
+    function populateEvents() {
+        const eventList = document.getElementById('eventList');
+        events.forEach(event => {
+            const eventDiv = document.createElement('div');
+            eventDiv.className = 'event';
+            eventDiv.innerHTML = `<strong>${event.name}</strong><br>${event.date}<br>${event.description}`;
+            eventList.appendChild(eventDiv);
+        });
+    }
+
+    // Initialize
+    storyContainer.style.opacity = 1;
+    nextButton.addEventListener('click', showNextPart);
+
+</script>
+
+</body>
+</html>
