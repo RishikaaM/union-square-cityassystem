@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization - Union Square Park</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .chart-container {
+            width: 30%; /* Set width to 30% for three charts per row */
+            margin: 1.5%; /* Margin for spacing */
+            display: inline-block; /* Align charts in a row */
+        }
+        canvas {
+            max-width: 100%; /* Make sure canvas fits the container */
+            height: auto; /* Auto height to maintain aspect ratio */
+        }
+        .navigation {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .navigation a {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Data Visualization for Union Square Park</h1>
+    </header>
+    <main>
+        <h2>Charts and Data Insights</h2>
+        <div class="chart-container">
+            <canvas id="barChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="pieChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="lineChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="dotChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="histogram"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="barChart2"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="pieChart2"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="lineChart2"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="dotChart2"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="histogram2"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="barChart3"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="pieChart3"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="lineChart3"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="dotChart3"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="histogram3"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="barChart4"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="pieChart4"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="lineChart4"></canvas>
+        </div>
+        
+        <div class="navigation">
+            <a href="index.html">Go to map</a>
+            <a href="treasure_hunt.html">Play a game!</a>
+        </div>
+
+        <script>
+            // Example Data reflecting realistic observations
+            const labels = ['Day 1', 'Day 2', 'Day 3'];
+            const visitorCounts = [1500, 1700, 1300]; // Approximate visitor counts
+            const activityLevels = [75, 85, 65]; // Activity levels in percentage
+
+            // Bar Chart: Visitor Count
+            const ctxBar = document.getElementById('barChart').getContext('2d');
+            new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Visitor Count',
+                        data: visitorCounts,
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Pie Chart: Activity Mapping
+            const ctxPie = document.getElementById('pieChart').getContext('2d');
+            new Chart(ctxPie, {
+                type: 'pie',
+                data: {
+                    labels: ['Jogging', 'Sitting', 'Yoga', 'Casual Strolls'],
+                    datasets: [{
+                        label: 'Activity Types',
+                        data: [40, 30, 20, 10], // Sample distribution of activities
+                        backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)'],
+                        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: { responsive: true }
+            });
+
+            // Line Chart: Activity Level
+            const ctxLine = document.getElementById('lineChart').getContext('2d');
+            new Chart(ctxLine, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Activity Level (%)',
+                        data: activityLevels,
+                        fill: false,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        tension: 0.1
+                    }]
+                }
+            });
+
+            // Dot Chart (Scatter) - Example
+            const ctxDot = document.getElementById('dotChart').getContext('2d');
+            new Chart(ctxDot, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Visitor Distribution',
+                        data: [{ x: 1, y: 10 }, { x: 2, y: 20 }, { x: 3, y: 15 }, { x: 4, y: 25 }],
+                        backgroundColor: 'rgba(255, 206, 86, 1)',
+                    }]
+                }
+            });
+
+            // Histogram: Age Distribution
+            const ctxHistogram = document.getElementById('histogram').getContext('2d');
+            new Chart(ctxHistogram, {
+                type: 'bar',
+                data: {
+                    labels: ['0-12', '13-17', '18-30', '31-50', '51+'],
+                    datasets: [{
+                        label: 'Visitor Age Groups',
+                        data: [200, 150, 400, 350, 200],
+                        backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+
+            // Bar Chart 2: Noise Levels
+            const ctxBar2 = document.getElementById('barChart2').getContext('2d');
+            new Chart(ctxBar2, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Average Noise Level (dB)',
+                        data: [75, 60, 50], // Noise levels per day
+                        backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Pie Chart 2: Air Quality Levels
+            const ctxPie2 = document.getElementById('pieChart2').getContext('2d');
+            new Chart(ctxPie2, {
+                type: 'pie',
+                data: {
+                    labels: ['Good', 'Moderate', 'Unhealthy'],
+                    datasets: [{
+                        label: 'Air Quality Levels',
+                        data: [1, 2, 0], // Sample data reflecting the days
+                        backgroundColor: ['rgba(75, 192, 192, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(255, 99, 132, 0.5)'],
+                        borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 206, 86, 1)', 'rgba(255, 99, 132, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: { responsive: true }
+            });
+
+            // Line Chart 2: Temperature Levels
+            const ctxLine2 = document.getElementById('lineChart2').getContext('2d');
+            new Chart(ctxLine2, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Temperature (°C)',
+                        data: [23, 25, 22],
+                        fill: false,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        tension: 0.1
+                    }]
+                }
+            });
+
+            // Dot Chart 2
+            const ctxDot2 = document.getElementById('dotChart2').getContext('2d');
+            new Chart(ctxDot2, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Foot Traffic',
+                        data: [{ x: 1, y: 1500 }, { x: 2, y: 1700 }, { x: 3, y: 1300 }],
+                        backgroundColor: 'rgba(54, 162, 235, 1)',
+                    }]
+                }
+            });
+
+            // Histogram 2: Seasonality
+            const ctxHistogram2 = document.getElementById('histogram2').getContext('2d');
+            new Chart(ctxHistogram2, {
+                type: 'bar',
+                data: {
+                    labels: ['Spring', 'Summer', 'Fall', 'Winter'],
+                    datasets: [{
+                        label: 'Visitor Count by Season',
+                        data: [500, 1200, 800, 300],
+                        backgroundColor: 'rgba(255, 206, 86, 0.5)',
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+
+            // Bar Chart 3: Interaction Type
+            const ctxBar3 = document.getElementById('barChart3').getContext('2d');
+            new Chart(ctxBar3, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Types of Interaction',
+                        data: [60, 50, 40], // Sample interaction levels
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Pie Chart 3: Demographic Distribution
+            const ctxPie3 = document.getElementById('pieChart3').getContext('2d');
+            new Chart(ctxPie3, {
+                type: 'pie',
+                data: {
+                    labels: ['Children', 'Adults', 'Seniors'],
+                    datasets: [{
+                        label: 'Demographic Distribution',
+                        data: [20, 60, 20],
+                        backgroundColor: ['rgba(75, 192, 192, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(153, 102, 255, 0.5)'],
+                        borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 206, 86, 1)', 'rgba(153, 102, 255, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: { responsive: true }
+            });
+
+            // Line Chart 3: Social Interaction
+            const ctxLine3 = document.getElementById('lineChart3').getContext('2d');
+            new Chart(ctxLine3, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Social Interaction (%)',
+                        data: [40, 50, 30],
+                        fill: false,
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        tension: 0.1
+                    }]
+                }
+            });
+
+            // Dot Chart 3
+            const ctxDot3 = document.getElementById('dotChart3').getContext('2d');
+            new Chart(ctxDot3, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Seating Availability',
+                        data: [{ x: 1, y: 25 }, { x: 2, y: 30 }, { x: 3, y: 15 }],
+                        backgroundColor: 'rgba(153, 102, 255, 1)',
+                    }]
+                }
+            });
+
+            // Histogram 3: Technology Use
+            const ctxHistogram3 = document.getElementById('histogram3').getContext('2d');
+            new Chart(ctxHistogram3, {
+                type: 'bar',
+                data: {
+                    labels: ['Low', 'Moderate', 'High'],
+                    datasets: [{
+                        label: 'Technology Use',
+                        data: [100, 300, 150],
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+
+            // Bar Chart 4: Wildlife Presence
+            const ctxBar4 = document.getElementById('barChart4').getContext('2d');
+            new Chart(ctxBar4, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Wildlife Observations',
+                        data: [5, 15, 3], // Wildlife observations
+                        backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Pie Chart 4: Seasonal Changes
+            const ctxPie4 = document.getElementById('pieChart4').getContext('2d');
+            new Chart(ctxPie4, {
+                type: 'pie',
+                data: {
+                    labels: ['Spring', 'Summer', 'Fall', 'Winter'],
+                    datasets: [{
+                        label: 'Seasonal Changes',
+                        data: [25, 35, 20, 20],
+                        backgroundColor: ['rgba(75, 192, 192, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 99, 132, 0.5)'],
+                        borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 206, 86, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 99, 132, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: { responsive: true }
+            });
+
+            // Line Chart 4: Tree Health Monitoring
+            const ctxLine4 = document.getElementById('lineChart4').getContext('2d');
+            new Chart(ctxLine4, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Tree Health Index',
+                        data: [70, 80, 60],
+                        fill: false,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        tension: 0.1
+                    }]
+                }
+            });
+        </script>
+    </main>
+    <footer>
+        <p>&copy; 2024 Union Square Park Project</p>
+    </footer>
+</body>
+</html>
