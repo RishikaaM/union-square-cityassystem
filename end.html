@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moving Park Animation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            background-color: #87CEEB; /* Sky color */
+            font-family: 'Helvetica', sans-serif; /* Helvetica font */
+        }
+        nav {
+            background-color: #4CAF50; /* Green background for the navbar */
+            width: 100%; /* Full width */
+            padding: 10px; /* Padding for navbar */
+            display: flex; /* Flexbox for navbar items */
+            justify-content: center; /* Center items */
+        }
+        nav a {
+            color: white; /* White text color */
+            text-decoration: none; /* Remove underline */
+            padding: 14px 20px; /* Padding for links */
+            font-size: 18px; /* Font size */
+        }
+        nav a:hover {
+            background-color: #45a049; /* Darker green background on hover */
+        }
+        #thankYouNote {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #333; /* Text color */
+        }
+        /* Fullscreen canvas */
+        #canvasContainer {
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 80px); /* Adjust for navbar height */
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Back to Main</a>
+    </nav>
+    <div id="thankYouNote">Thank you for viewing my Union Square website!</div>
+    <div id="canvasContainer"></div>
+
+    <script>
+        let trees = [];
+        let birds = [];
+        
+        function setup() {
+            // Create canvas that fills the container
+            let canvas = createCanvas(windowWidth, windowHeight - 80); // Adjusted height for navbar
+            canvas.parent('canvasContainer'); // Attach the canvas to the container
+            for (let i = 0; i < 10; i++) {
+                trees.push(new Tree(random(width), random(height - 50, height - 10)));
+            }
+            for (let i = 0; i < 5; i++) {
+                birds.push(new Bird(random(width), random(50, 150)));
+            }
+        }
+
+        function draw() {
+            background(135, 206, 250); // Sky color
+            fill(34, 139, 34); // Grass color
+            rect(0, height - 50, width, 50); // Grass
+            
+            for (let tree of trees) {
+                tree.display();
+                tree.sway();
+            }
+            
+            for (let bird of birds) {
+                bird.display();
+                bird.fly();
+            }
+        }
+
+        class Tree {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = random(30, 50);
+                this.angle = 0;
+            }
+
+            display() {
+                fill(139, 69, 19); // Brown color for trunk
+                rect(this.x, this.y, this.size / 5, this.size); // Trunk
+
+                fill(0, 128, 0); // Green color for leaves
+                ellipse(this.x + this.size / 10, this.y - this.size / 2, this.size, this.size); // Leaves
+            }
+
+            sway() {
+                this.angle += 0.02;
+                this.x += sin(this.angle) * 0.5; // Swaying motion
+            }
+        }
+
+        class Bird {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = 15;
+                this.speed = random(1, 3);
+            }
+
+            display() {
+                fill(255, 255, 0); // Yellow color for birds
+                ellipse(this.x, this.y, this.size, this.size / 2); // Body
+                fill(0);
+                triangle(this.x, this.y, this.x - 5, this.y - 5, this.x - 5, this.y + 5); // Wing
+            }
+
+            fly() {
+                this.x += this.speed; // Move bird to the right
+                if (this.x > width) {
+                    this.x = 0; // Reset bird position when it flies off screen
+                    this.y = random(50, 150); // Random height for bird
+                }
+            }
+        }
+
+        function windowResized() {
+            resizeCanvas(windowWidth, windowHeight - 80); // Adjust canvas size when window is resized
+        }
+    </script>
+   
+</body>
+</html>
