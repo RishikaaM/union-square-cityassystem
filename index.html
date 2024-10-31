@@ -11,11 +11,15 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Full height of the viewport */
         }
         header {
             background-color: #4CAF50;
             color: white;
             padding: 15px;
+            text-align: center;
         }
         nav ul {
             list-style-type: none;
@@ -30,10 +34,15 @@
             text-decoration: none;
         }
         main {
+            flex: 1; /* Take remaining space */
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align items at the top */
+            text-align: center;
         }
         #map {
-            height: 400px;
+            height: calc(100vh - 150px); /* Fill remaining height minus header and footer */
             width: 100%;
             margin-top: 20px;
         }
@@ -42,19 +51,16 @@
             color: white;
             text-align: center;
             padding: 10px;
-            position: relative;
-            bottom: 0;
             width: 100%;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Welcome to Union Square Park Experimental Map</h1>
+        <h1>Welcome to Union Square !</h1>
     </header>
     <main>
-        <h2>Explore Union Square Park</h2>
-        <p>This experimental map visualizes various elements of Union Square Park, including historical points of interest and visitor data.</p>
+       
         <div id="map"></div>
     </main>
     <footer>
