@@ -3,70 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meaningful Union Square Park Treasure Hunt</title>
+    <title>Treasure Hunt</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             text-align: center;
+            background: url('licensed-image.jpg') no-repeat center center fixed; /* Replace with your image URL */
+            background-size: cover; /* Cover the whole screen */
+            color: white;
         }
         header {
-            background-color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.9); /* Semi-transparent darker green */
             color: white;
-            padding: 15px;
+            padding: 20px;
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
         }
         footer {
-            background-color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.9); /* Semi-transparent darker green */
             color: white;
             text-align: center;
-            padding: 10px;
+            padding: 15px;
             position: relative;
             bottom: 0;
             width: 100%;
+            border-radius: 10px; /* Rounded corners */
+            margin-top: 20px; /* Space above footer */
+        }
+        h1, h2 {
+            margin: 0;
+            font-size: 36px; /* Larger font size for headings */
         }
         .message {
             margin-top: 20px;
-            font-size: 18px;
-            color: #333;
+            font-size: 20px; /* Larger font size for messages */
+            color: white;
         }
         .score {
-            font-size: 24px;
+            font-size: 28px; /* Larger font size for score */
             color: #4CAF50;
+            font-weight: bold; /* Bold font */
         }
         .hints {
-            font-size: 16px;
+            font-size: 18px; /* Larger font size for hints */
             color: #555;
         }
         .navigation {
             margin-top: 20px;
         }
         .navigation a {
-            background-color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.9); /* Semi-transparent green */
             color: white;
             padding: 10px 20px;
             text-decoration: none;
             border-radius: 5px;
-            margin: 0 5px; /* Add margin between links */
+            margin: 0 5px; /* Margin between links */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+        }
+        .navigation a:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+        #mapContainer {
+            margin: 20px auto; /* Center map container */
+            max-width: 800px; /* Max width for the map */
+            border: 2px solid #4CAF50; /* Green border around the map */
+            border-radius: 10px; /* Rounded corners for the map */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Meaningful Union Square Park Treasure Hunt</h1>
+        <h1>Treasure Hunt</h1>
     </header>
     <main>
         <h2>Click on Areas to Discover Treasures!</h2>
         <div id="mapContainer"></div>
         <div class="message" id="message"></div>
         <div class="score" id="score">Score: 0</div>
-        <div class="hints" id="hints">Hint: Click around the park to discover treasures!</div>
-;
         <div class="navigation">
             <a href="data.html">Back to Data Visualization</a>
             <a href="final_observation.html">History and Events</a>
-        
         </div>
     </main>
     <footer>
@@ -75,12 +95,12 @@
 
     <script>
         let treasures = [
-            { position: { x: 150, y: 100 }, found: false, points: 10, fact: "Did you know? Union Square Park has been a public gathering place since 1839." },
-            { position: { x: 400, y: 100 }, found: false, points: 20, fact: "Yoga sessions are held here regularly, promoting wellness and community." },
-            { position: { x: 150, y: 250 }, found: false, points: 15, fact: "The playground is a hub for families, filled with laughter and activity." },
-            { position: { x: 400, y: 250 }, found: false, points: 25, fact: "The park hosts various art exhibits that celebrate local artists." },
-            { position: { x: 650, y: 100 }, found: false, points: 30, fact: "Relaxation areas encourage visitors to unwind and connect with nature." },
-            { position: { x: 650, y: 250 }, found: false, points: 5, fact: "Community gatherings foster local engagement and collaboration." }
+            { position: { x: 150, y: 100 }, found: false, points: 10, fact: "Union Square is home to NYC's oldest outdoor sculpture - an equestrian statue of George Washington, erected in 1856!" },
+            { position: { x: 400, y: 100 }, found: false, points: 20, fact: "Union Square’s Metronome art piece has a giant clock that counts down the time left in the day – mesmerizing and a little eerie!" },
+            { position: { x: 150, y: 250 }, found: false, points: 15, fact: "During the 19th century, Union Square was a fashion hotspot, surrounded by New York's earliest department stores." },
+            { position: { x: 400, y: 250 }, found: false, points: 25, fact: "The Gandhi statue in Union Square is one of the few in the U.S. and represents the park’s spirit of activism and peace." },
+            { position: { x: 650, y: 100 }, found: false, points: 30, fact: "The iconic Barnes & Noble near Union Square is one of NYC’s largest bookstores, a haven for book lovers since 1995." },
+            { position: { x: 650, y: 250 }, found: false, points: 5, fact: "Union Square hosts NYC’s longest-running dog park, where dogs and their owners gather in the city’s first off-leash area!" }
         ];
 
         let score = 0;
