@@ -11,35 +11,53 @@
             flex-direction: column;
             align-items: center;
             margin: 0;
-            background-color: #87CEEB; /* Sky color */
-            font-family: 'Helvetica', sans-serif; /* Helvetica font */
+            background: green; /* Soft gradient background */
+            font-family: Arial, sans-serif;
+            color: #333; /* Text color */
+            overflow: hidden; /* Prevent scrolling */
         }
         nav {
-            background-color: #4CAF50; /* Green background for the navbar */
+            font-family: Arial, sans-serif;
+            background-color: rgba(34, 139, 34, 0.85); /* Semi-transparent green */
             width: 100%; /* Full width */
-            padding: 10px; /* Padding for navbar */
+            padding: 20px;
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex; /* Flexbox for navbar items */
             justify-content: center; /* Center items */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+            position: fixed; /* Fixed position for navbar */
+            top: 0; /* Stick to the top */
+            z-index: 10; /* Ensure navbar is above other elements */
         }
         nav a {
             color: white; /* White text color */
             text-decoration: none; /* Remove underline */
-            padding: 14px 20px; /* Padding for links */
+            padding: 10px 20px; /* Padding for links */
             font-size: 18px; /* Font size */
+            transition: background-color 0.3s; /* Smooth transition */
         }
         nav a:hover {
             background-color: #45a049; /* Darker green background on hover */
+            border-radius: 5px; /* Rounded corners on hover */
         }
         #thankYouNote {
-            margin-top: 20px;
-            font-size: 24px;
+            margin-top: 80px; /* Space for the fixed navbar */
+            font-size: 24px; /* Larger font size */
             color: #333; /* Text color */
+            text-align: center; /* Center text */
+            padding: 20px; /* Padding for the note */
+            background: rgba(255, 255, 255, 0.9); /* Light background for contrast */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+            max-width: 800px; /* Limit width for readability */
         }
         /* Fullscreen canvas */
         #canvasContainer {
             position: relative;
             width: 100%;
-            height: calc(100vh - 80px); /* Adjust for navbar height */
+            height: calc(100vh - 150px); /* Adjust for navbar and note height */
+            overflow: hidden; /* Prevent overflow */
         }
     </style>
 </head>
@@ -56,7 +74,7 @@
         
         function setup() {
             // Create canvas that fills the container
-            let canvas = createCanvas(windowWidth, windowHeight - 80); // Adjusted height for navbar
+            let canvas = createCanvas(windowWidth, windowHeight - 150); // Adjusted height for navbar and thank you note
             canvas.parent('canvasContainer'); // Attach the canvas to the container
             for (let i = 0; i < 10; i++) {
                 trees.push(new Tree(random(width), random(height - 50, height - 10)));
@@ -129,9 +147,8 @@
         }
 
         function windowResized() {
-            resizeCanvas(windowWidth, windowHeight - 80); // Adjust canvas size when window is resized
+            resizeCanvas(windowWidth, windowHeight - 150); // Adjust canvas size when window is resized
         }
     </script>
-   
 </body>
 </html>
