@@ -6,53 +6,63 @@
     <title>Interactive History of Union Square</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Georgia', serif; /* Classic font for a book-like feel */
             margin: 0;
             padding: 0;
-            background-image: url('https://i.imgur.com/rQoClFq.jpg'); /* Union Square Park background */
-            background-size: cover;
-            background-position: center;
             color: #333;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
             overflow: hidden;
+            text-align: center; /* Center text alignment */
+            background: url('1.jpg') no-repeat center center fixed; /* Replace with your image URL */
+            background-size: cover; /* Cover the whole screen */
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+            z-index: 1; /* Ensure overlay is on top */
         }
         .nav {
             width: 100%;
             background-color: rgba(34, 139, 34, 0.85); /* Semi-transparent green */
             color: white;
-            padding: 10px;
-            text-align: center;
-            position: relative;
-            z-index: 10;
+            padding: 15px;
+            position: absolute; /* Fixed position for the navbar */
+            top: 0;
+            z-index: 10; /* Ensure navbar is on top */
         }
         .nav a {
             color: white;
-            margin: 0 15px;
+            margin: 0 20px;
             text-decoration: none;
             font-weight: bold;
+            font-size: 18px; /* Slightly larger font for navigation */
         }
         .book-container {
             width: 80%;
+            max-width: 800px; /* Limit width for readability */
             height: 80%;
-            background: rgba(255, 255, 255, 0.9); /* Light background for contrast */
+            background: rgba(255, 255, 255, 0.95); /* Light background for contrast */
             border-radius: 15px;
             position: relative;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             overflow: hidden;
+            padding: 40px; /* Added padding for a comfortable reading space */
+            line-height: 1.6; /* Increased line height for better readability */
+            z-index: 2; /* Ensure book container is on top */
         }
         .story-container {
+            margin: 20px 0;
             padding: 20px;
             background: rgba(255, 255, 255, 0.9);
-            border-radius: 5px;
-            margin: 20px;
-            max-width: 600px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            border-radius: 10px;
             opacity: 0;
             transition: opacity 0.5s;
         }
@@ -67,28 +77,17 @@
             background: rgba(255, 255, 255, 0.9);
             border-left: 5px solid #8B4513; /* Saddle brown */
             border-radius: 5px;
-        }
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            margin-top: 20px;
-            background-color: #6B8E23; /* Olive green */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            text-align: center;
-            transition: background-color 0.3s;
-        }
-        .button:hover {
-            background-color: #556B2F; /* Dark olive green */
+            text-align: left; /* Left align event text */
         }
         h1 {
-            text-align: center;
             color: #333;
-            margin: 20px;
+            margin: 20px 0;
             text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
+            font-size: 36px; /* Larger font size for the main title */
+        }
+        h2 {
+            font-size: 24px; /* Larger font size for section headers */
+            margin-top: 30px;
         }
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -97,6 +96,9 @@
     </style>
 </head>
 <body>
+
+<!-- Overlay for better readability -->
+<div class="overlay"></div>
 
 <!-- Navigation Bar -->
 <div class="nav">
@@ -108,7 +110,6 @@
     <h1>Explore the History of Union Square</h1>
     <div class="story-container" id="storyContainer">
         <p class="story-text" id="storyText"></p>
-        <button class="button" id="nextButton">Next</button>
     </div>
     <div class="events" id="eventsSection">
         <h2>Upcoming Events and Activities</h2>
@@ -128,22 +129,17 @@
     ];
 
     let currentPart = 0;
-
     const storyText = document.getElementById('storyText');
-    const nextButton = document.getElementById('nextButton');
     const storyContainer = document.getElementById('storyContainer');
     const eventsSection = document.getElementById('eventsSection');
 
     function showNextPart() {
         if (currentPart < storyParts.length) {
-            // Display each story part with a fade-in effect
             storyText.innerHTML += `<br>${storyParts[currentPart]}`;
             storyContainer.style.opacity = 1;
-            storyContainer.style.animation = "fadeIn 0.5s forwards";
             currentPart++;
         }
         if (currentPart === storyParts.length) {
-            nextButton.style.display = 'none';
             setTimeout(() => {
                 storyContainer.style.opacity = 0;
                 setTimeout(() => {
@@ -190,7 +186,14 @@
 
     // Initialize
     storyContainer.style.opacity = 1;
-    nextButton.addEventListener('click', showNextPart);
+
+    // Show the story parts with a delay
+    const interval = setInterval(() => {
+        showNextPart();
+        if (currentPart >= storyParts.length) {
+            clearInterval(interval); // Stop the interval when the story is done
+        }
+    }, 3000); // Show each part every 3 seconds
 
 </script>
 
